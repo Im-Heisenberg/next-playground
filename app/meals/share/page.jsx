@@ -1,9 +1,12 @@
+"use client";
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 import { shareMealAction } from "@/lib/actions";
 import MealSubmit from "@/components/meals/meal-submit";
+import { useActionState } from "react";
 
 export default function ShareMealPage() {
+	const [state, action] = useActionState(shareMealAction, { message: null });
 	return (
 		<>
 			<header className={classes.header}>
@@ -14,7 +17,7 @@ export default function ShareMealPage() {
 				<p>Or any other meal you feel needs sharing!</p>
 			</header>
 			<main className={classes.main}>
-				<form className={classes.form} action={shareMealAction}>
+				<form className={classes.form} action={action}>
 					<div className={classes.row}>
 						<p>
 							<label htmlFor="name">Your name</label>
@@ -46,6 +49,7 @@ export default function ShareMealPage() {
 					<p className={classes.actions}>
 						<MealSubmit />
 					</p>
+					{state.message && <p>{state.message}</p>}
 				</form>
 			</main>
 		</>

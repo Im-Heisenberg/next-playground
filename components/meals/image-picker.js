@@ -11,15 +11,17 @@ function ImagePicker({ label, name }) {
 		}
 	};
 	const changeHandler = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				console.log(e.target.result);
-				setPickedImage(e.target.result);
-			};
-			reader.readAsDataURL(file);
+		const file = event.target.files[0];
+		if (!file) {
+			return;
 		}
+
+		const fileReader = new FileReader();
+
+		fileReader.onload = () => {
+			setPickedImage(fileReader.result);
+		};
+		fileReader.readAsDataURL(file);
 	};
 	return (
 		<div className={classses.picker}>
